@@ -60,7 +60,7 @@ export default function Entry() {
             </div>
             <Modal open={open} classname='mymodal'>
                 <div className='entrymodal'>
-                    <form action="/action_page.php">
+                    <form onSubmit={handleSubmit}>
                         <div className='logo'></div>
                         <p>Search for your voter information</p>
                         <label htmlFor="fname">First name: </label>
