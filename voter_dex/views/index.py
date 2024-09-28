@@ -26,7 +26,9 @@ def user_info():
   zipcode = data.get('zipcode')
 
   # fetch {county, jurisdiction, precinct}
+  
   # if we have county-jursdiction-precinct in our DB else compute and insert into DB
+
   # fetch info from DB -> 
 
   print(zipcode)
