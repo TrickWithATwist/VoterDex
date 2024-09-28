@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7)@=p_7!_&#@gtuy#+%%cua&7*zjczc$&sfh2phc%_ltgujfc)'
+SECRET_KEY = 'django-insecure-aaqp5fe(k+j57rc^bu^jylk&@$^!we*x#%nm9bwsctl4x(2mh2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['3.137.191.83', 'localhost','127.0.0.1']
+ALLOWED_HOSTS = ['3.137.191.83','localhost','127.0.0.1']
 
 
 # Application definition
@@ -77,8 +77,7 @@ WSGI_APPLICATION = 'routing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': django / 'db.sqlite3',
-	'HOST':'localhost'
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
