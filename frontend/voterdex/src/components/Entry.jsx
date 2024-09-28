@@ -11,9 +11,15 @@ export default function Entry() {
                 <div className='logo'>
                 </div>
             </div>
-            <Modal open={open} class='mymodal'>
+            <Modal open={open} classname='mymodal'>
                 <div className='entrymodal'>
-                    <p>hi</p>
+                    <form action="/action_page.php">
+                        <label htmlFor="fname">First name:</label>
+                        <input type="text" id="fname" name="fname" /><br /><br />
+                        <label htmlFor="lname">Last name:</label>
+                        <input type="text" id="lname" name="lname" /><br /><br />
+                        <input type="submit" value="Submit" />
+                    </form>
                 </div>
             </Modal>
         </div>
