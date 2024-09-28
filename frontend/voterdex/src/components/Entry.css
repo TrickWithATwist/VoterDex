@@ -7,6 +7,8 @@ body{
 .flexbox
 {
     display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .header
@@ -21,4 +23,54 @@ body{
     width: 356px;
     height: 116px;
     z-index: 10;
+}
+
+
+
+.entrymodal
+{
+    display: flex;
+    background-color: #fff;
+}
+
+.modal-backdrop {
+    animation: fade-in 1s;
+    animation-fill-mode: forwards;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  
+@keyframes fade-in
+{
+    from
+    {
+        opacity: 0;
+    }
+
+    to
+    {
+        opacity: 100;
+    }
+}
+
+@keyframes scale-up
+{
+    from
+    {
+        transform: scale(0.8);
+    }
+
+    to
+    {
+        transform: scale(1);
+    }
 }

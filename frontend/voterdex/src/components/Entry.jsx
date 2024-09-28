@@ -1,17 +1,21 @@
 import './Entry.css';
+import Modal from './Modal';
+import { useState } from 'react';
 
+export default function Entry() {
+    const [open, setOpen] = useState(true);  // Set to true to show modal immediately
 
-export default function Entry()
-{
-    return(
-        <body>
-            <div className='flexbox'>
-                <div className='header'>
-                    <div className='logo'>
-
-                    </div>
+    return (
+        <div className='flexbox'>
+            <div className='header'>
+                <div className='logo'>
                 </div>
             </div>
-        </body>
-    )
+            <Modal open={open} class='mymodal'>
+                <div className='entrymodal'>
+                    <p>hi</p>
+                </div>
+            </Modal>
+        </div>
+    );
 }

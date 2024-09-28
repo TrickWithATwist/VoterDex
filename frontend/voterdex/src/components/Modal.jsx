@@ -5,7 +5,7 @@ export default function Modal({open, onClose, children}) {
 
         return (
         <div className="modal-backdrop" onClick={onClose}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-content" >
                 {children}
             </div>
         </div>
