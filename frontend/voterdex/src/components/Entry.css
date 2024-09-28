@@ -1,0 +1,24 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    background-color: #007BA7;
+}
+
+.flexbox
+{
+    display: flex;
+}
+
+.header
+{
+    background-color: #002366;
+    width: 100%;
+}
+
+.logo 
+{
+    background-image: url('./assets/voterdex_logo.png');
+    width: 356px;
+    height: 116px;
+    z-index: 10;
+}
