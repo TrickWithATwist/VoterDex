@@ -31,6 +31,7 @@ body{
 {
     display: flex;
     background-color: #fff;
+    padding: 20px;
 }
 
 .modal-backdrop {
