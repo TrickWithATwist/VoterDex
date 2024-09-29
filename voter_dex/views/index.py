@@ -39,7 +39,7 @@ def user_info():
   # fetch {county, jurisdiction, precinct}
   try:
     county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zipcode)
-    # proposals = get_ballot(county, jurisdiction, precinct)
+    proposals = get_ballot(county, jurisdiction, precinct)
     # translate to Spanish
     proposals = []
     translator = Translator()
@@ -126,7 +126,7 @@ def get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_
     chrome_options = Options()
     # Remove headless mode for visible browser interactions
     chrome_options.add_argument("--headless")  
-    service = Service(CHROME_DRIVER)
+    service = Service(ANDREW_DRIVER)
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     try:
@@ -169,7 +169,8 @@ def get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_
 def get_ballot(county, jurisdiction, precinct):
     # Configure Selenium WebDriver options
     chrome_options = Options()
-    service = Service(CHROME_DRIVER)  # Update the path to your chromedriver
+    chrome_options.add_argument("--headless") 
+    service = Service(ANDREW_DRIVER)  # Update the path to your chromedriver
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     try:
@@ -209,22 +210,60 @@ def get_ballot(county, jurisdiction, precinct):
         # wait until new page loads
         proposal_section = wait.until(EC.presence_of_element_located((By.ID, 'proposals')))
         # get proprosals
-        proposals = get_proposals(driver)
+        wait.until(EC.presence_of_element_located((By.ID, 'proposals')))
+
+        # Find the proposals section
+        proposals_section = driver.find_element(By.ID, "proposals")
+
+        # Get all child elements within the proposals section
+        proposal_elements = proposals_section.find_elements(By.XPATH, "./*")
+        # Variables to hold proposal information
+        current_title = None
+        proposals = []
+
+        current_description = ""
+        for element in proposal_elements:
+            # If it's a proposal title, start a new proposal
+            if 'row' in element.get_attribute("class"):
+                # get the class name of its child div
+                child_div = element.find_element(By.XPATH, "./*")
+                if 'proposalTitle' in child_div.get_attribute("class"):
+                    if current_title:
+                        # If there's a title and we've collected content, save the proposal
+                        proposals.append({
+                            "title": current_title,
+                            "description": current_description.strip()
+                        })
+                        current_description = ""
+                    # Start a new proposal
+                    current_title = child_div.text.strip()
+            elif current_title:
+                # For other elements (description parts), collect the text
+                if element.tag_name == "p" or element.tag_name == "div":
+                    current_description += element.text.strip() + "\n"
+
+        # Capture the last proposal if it exists
+        if current_title:
+            proposals.append({
+                "title": current_title,
+                "description": current_description.strip()
+            })
         print(proposals)
+        return proposals
 
 
     finally:
         driver.quit()
 
 
-first_name = 'Andrew'
-last_name = 'Mahler'
-birth_month = '4'  # April
-birth_year = '2002'
-zip_code = '48823'
+# first_name = 'Andrew'
+# last_name = 'Mahler'
+# birth_month = '4'  # April
+# birth_year = '2002'
+# zip_code = '48823'
 
-# Retrieve the county, precinct, and jurisdiction
+# # Retrieve the county, precinct, and jurisdiction
 # county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_code)
 
-# # Fill the election form using the retrieved info
+# # # Fill the election form using the retrieved info
 # get_ballot(county, jurisdiction, precinct)
