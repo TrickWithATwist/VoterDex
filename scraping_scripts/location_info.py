@@ -10,7 +10,7 @@ def get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_
     # Configure Selenium WebDriver options
     chrome_options = Options()
     # Remove headless mode for visible browser interactions
-    chrome_options.add_argument("--headless")  
+    # chrome_options.add_argument("--headless")  
     service = Service('/usr/local/bin/chromedriver')
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
@@ -48,12 +48,15 @@ def get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_
     finally:
         driver.quit()
 
-# Example usage
-first_name = 'Abbas'
-last_name = 'Fattah'
-birth_month = '4'  # May
-birth_year = '2002'
-zip_code = '48823'
 
-county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_code)
-print(f"County: {county}, Precinct: {precinct}", f"Jurisdiction: {jurisdiction}")
+
+
+# Example usage
+# first_name = 'Abbas'
+# last_name = 'Fattah'
+# birth_month = '4'  # May
+# birth_year = '2002'
+# zip_code = '48823'
+
+# county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_code)
+# print(f"County: {county}, Precinct: {precinct}", f"Jurisdiction: {jurisdiction}")
