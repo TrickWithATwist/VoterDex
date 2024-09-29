@@ -42,11 +42,10 @@ def user_info():
     county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zipcode)
     proposals = get_ballot(county, jurisdiction, precinct)
     # translate to Spanish
-    proposals = []
-    translator = Translator()
-    for proposal in proposals:
-        proposal['title'] = translator.translate(proposal['title'], dest="es")
-        proposal['description'] = translator.translate(proposal['description'], dest="es")
+    # translator = Translator()
+    # for proposal in proposals:
+    #     proposal['title'] = translator.translate(proposal['title'], dest="es")
+    #     proposal['description'] = translator.translate(proposal['description'], dest="es")
     response = dict()
     response['info'] = {'county': county, 'jurisdiction': jurisdiction, 'precinct' : precinct}
     response['proposals'] = {'proposals': proposals}
