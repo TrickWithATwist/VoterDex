@@ -1,5 +1,5 @@
 // Custom Progress component
-const Progress = ({ value }) => {
+export const Progress = ({ value }) => {
     return (
         <div className="progress-bar" style={{ width: '100%', backgroundColor: '#e0e0e0', borderRadius: '4px' }}>
             <div

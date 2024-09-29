@@ -1,23 +1,7 @@
 import './Entry.css';
 import Modal from './Modal';
 import { useState } from 'react';
-
-// Custom Progress component
-const Progress = ({ value }) => {
-    return (
-        <div className="progress-bar" style={{ width: '100%', backgroundColor: '#e0e0e0', borderRadius: '4px' }}>
-            <div
-                style={{
-                    width: `${value}%`,
-                    backgroundColor: '#4CAF50',
-                    height: '20px',
-                    borderRadius: '4px',
-                    transition: 'width 0.5s ease-in-out'
-                }}
-            />
-        </div>
-    );
-};
+import { Progress } from './ui/progress'
 
 export default function Entry() {
     const [open, setOpen] = useState(true);
@@ -88,12 +72,12 @@ export default function Entry() {
     };
 
     const renderResponseData = () => {
-        if (!responseData) return null;
+        if (!responseData || !responseData.info) return null;
         
         return (
             <div className="response-data">
                 <h2>Your Voter Information</h2>
-                {Object.entries(responseData).map(([key, value]) => (
+                {Object.entries(responseData.info).map(([key, value]) => (
                     <p key={key}><strong>{key}:</strong> {value}</p>
                 ))}
             </div>
@@ -111,6 +95,7 @@ export default function Entry() {
                     <div className='entrymodal'>
                         {loading ? (
                             <div className="loading-container">
+                                <div className='logo'></div>
                                 <p>Loading...</p>
                                 <Progress value={progress} className="w-full" />
                             </div>
