@@ -46,7 +46,10 @@ def user_info():
     for proposal in proposals:
         proposal['title'] = translator.translate(proposal['title'], dest="es")
         proposal['description'] = translator.translate(proposal['description'], dest="es")
-    return jsonify({'county': county, 'jurisdiction': jurisdiction, 'precinct' : precinct, 'proposals': proposals}), 201
+    response = dict()
+    response['info'] = {'county': county, 'jurisdiction': jurisdiction, 'precinct' : precinct}
+    response['proposals'] = {'proposals': proposals}
+    return jsonify(**response), 201
   except Exception as e:
     print(e)
     return jsonify({"county": "county", "precinct" : "precinct", "jurisdiction": "jurisdiction"}), 500
@@ -219,7 +222,7 @@ birth_year = '2002'
 zip_code = '48823'
 
 # Retrieve the county, precinct, and jurisdiction
-county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_code)
+# county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_code)
 
-# Fill the election form using the retrieved info
-get_ballot(county, jurisdiction, precinct)
+# # Fill the election form using the retrieved info
+# get_ballot(county, jurisdiction, precinct)

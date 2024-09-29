@@ -80,6 +80,10 @@ export default function Entry() {
                 {Object.entries(responseData).map(([key, value]) => (
                     <p key={key}><strong>{key}:</strong> {value}</p>
                 ))}
+                <h2>Proposals</h2>
+                {Object.entries(responseData.info).map(([key, value]) => (
+                    <p key={key}><strong>{key}:</strong> {value}</p>
+                ))}
             </div>
         );
     };
