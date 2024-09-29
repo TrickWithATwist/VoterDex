@@ -13,6 +13,7 @@ import voter_dex
 import time
 
 CHROME_DRIVER = '/usr/bin/chromedriver'
+ANDREW_DRIVER = '/home/andrew/chromedriver-linux64/chromedriver'
 
 @voter_dex.app.route('/')
 def show_index():
@@ -36,26 +37,52 @@ def user_info():
   birth_year = data.get('birth_year')
   zipcode = data.get('zipcode')
 
+  birth_month_index = month_to_index(birth_month)
+  if birth_month_index == None:
+      return jsonify({"error": "county", "precinct" : "precinct", "jurisdiction": "jurisdiction", "error" : "invalid birthday month"}), 500
+
+
   # fetch {county, jurisdiction, precinct}
   try:
-    county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zipcode)
+    county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month_index, birth_year, zipcode)
     proposals = get_ballot(county, jurisdiction, precinct)
     # translate to Spanish
-    # translator = Translator()
-    # for proposal in proposals:
-    #     proposal['title'] = translator.translate(proposal['title'], dest="es")
-    #     proposal['description'] = translator.translate(proposal['description'], dest="es")
+    translator = Translator()
+    for proposal in proposals:
+        proposal['title'] = str(translator.translate(proposal['title'], dest="es").text)
+        proposal['description'] = str(translator.translate(proposal['description'], dest="es").text)
     response = dict()
     response['info'] = {'county': county, 'jurisdiction': jurisdiction, 'precinct' : precinct}
     response['proposals'] = {'proposals': proposals}
     return jsonify(**response), 201
   except Exception as e:
     print(e)
-    return jsonify({"county": "county", "precinct" : "precinct", "jurisdiction": "jurisdiction"}), 500
+    return jsonify({"county": "county", "precinct" : "precinct", "jurisdiction": "jurisdiction", "error": e}), 500
 
 
 
+def month_to_index(month):
+    # Create a dictionary mapping month names to their corresponding indices
+    month_map = {
+        'january': 1,
+        'february': 2,
+        'march': 3,
+        'april': 4,
+        'may': 5,
+        'june': 6,
+        'july': 7,
+        'august': 8,
+        'september': 9,
+        'october': 10,
+        'november': 11,
+        'december': 12
+    }
 
+    # Convert the input month string to lowercase
+    month_lower = month.lower()
+
+    # Return the corresponding index or None if the month is not valid
+    return month_map.get(month_lower, None)
 
 def find_and_click_most_similar_option(driver, select_element_id, target_text):
     # Get the dropdown element
