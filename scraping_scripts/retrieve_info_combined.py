@@ -115,8 +115,56 @@ def fill_election_form(county, jurisdiction, precinct):
         submit_button = wait.until(EC.element_to_be_clickable((By.ID, 'btnGenerateBallot')))
         submit_button.click()
 
-        # Optionally, you can add a wait for the page to load after submission
-        time.sleep(15)  # Adjust the wait time as needed
+        time.sleep(2)  # Wait for the ballot to load
+        wait.until(EC.presence_of_element_located((By.ID, 'proposals')))
+
+        # Find the proposals section
+        proposals_section = driver.find_element(By.ID, "proposals")
+
+        # Get all child elements within the proposals section
+        proposal_elements = proposals_section.find_elements(By.XPATH, "./*")
+        print(f"Found {len(proposal_elements)} proposal elements.")
+
+        # Variables to hold proposal information
+        current_title = None
+        proposals = []
+
+        current_description = ""
+        for element in proposal_elements:
+            # If it's a proposal title, start a new proposal
+            print(f"Element class: {element.get_attribute('class')}")
+            if 'row' in element.get_attribute("class"):
+                # get the class name of its child div
+                child_div = element.find_element(By.XPATH, "./*")
+                print(f"Child div class: {child_div.get_attribute('class')}")
+                if 'proposalTitle' in child_div.get_attribute("class"):
+                    if current_title:
+                        # If there's a title and we've collected content, save the proposal
+                        proposals.append({
+                            "title": current_title,
+                            "description": current_description.strip()
+                        })
+                        current_description = ""
+                    # Start a new proposal
+                    current_title = child_div.text.strip()
+                    print(f"Proposal Title: {current_title}")
+            elif current_title:
+                # For other elements (description parts), collect the text
+                print(f"Element tag name: {element.tag_name}")
+                if element.tag_name == "p" or element.tag_name == "div":
+                    current_description += element.text.strip() + "\n"
+
+        # Capture the last proposal if it exists
+        if current_title:
+            proposals.append({
+                "title": current_title,
+                "description": current_description.strip()
+            })
+
+        # Print all proposals
+        for proposal in proposals:
+            print(f"Proposal Title: {proposal['title']}")
+            print(f"Description: {proposal['description']}\n")
 
     finally:
         driver.quit()
