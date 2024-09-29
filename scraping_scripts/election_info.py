@@ -34,9 +34,9 @@ def find_and_click_most_similar_option(driver, select_element_id, target_text):
     else:
         print("No suitable match found.")
 
-# Example usage
-target_text = "City Of East Lansing"
-find_and_click_most_similar_option(driver, "Jurisdictions", target_text)
+# # Example usage
+# target_text = "City Of East Lansing"
+# find_and_click_most_similar_option(driver, "Jurisdictions", target_text)
 
 
 def fill_election_form():
