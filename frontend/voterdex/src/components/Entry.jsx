@@ -74,6 +74,17 @@ export default function Entry() {
     const renderResponseData = () => {
         if (!responseData || !responseData.info) return (<p>your mom</p>);
         
+        console.log("errrm", responseData.proposals);
+        console.log("errrm", responseData.proposals[0]);
+        if (!Array.isArray(responseData.proposals)) {
+          console.log("what?")  
+        }
+        // const props = responseData[.proposals].map((proposal, index) => (
+        //   <div key={index}>
+        //       <h3>{proposal.title}</h3>
+        //       <p>{proposal.description}</p>
+        //   </div>));
+        // console.log("props ", props);
         return (
             <div className="response-data">
                 <h2>Your Voter Information</h2>
@@ -82,8 +93,8 @@ export default function Entry() {
                 ))}
     
                 <h2>Proposals</h2>
-                {responseData.proposals && responseData.proposals.length > 0 ? (
-                    responseData.proposals.map((proposal, index) => (
+                {responseData["proposals"] && responseData["proposals"].length > 0 ? (
+                    responseData["proposals"].map((proposal, index) => (
                         <div key={index}>
                             <h3>{proposal.title}</h3>
                             <p>{proposal.description}</p>
