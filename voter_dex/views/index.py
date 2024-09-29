@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from fuzzywuzzy import fuzz
+from googletrans import Translator
 import voter_dex
 import time
 
@@ -38,13 +39,17 @@ def user_info():
   # fetch {county, jurisdiction, precinct}
   try:
     county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zipcode)
+    # proposals = get_ballot(county, jurisdiction, precinct)
+    # translate to Spanish
+    proposals = []
+    translator = Translator()
+    for proposal in proposals:
+        proposal['title'] = translator.translate(proposal['title'], dest="es")
+        proposal['description'] = translator.translate(proposal['description'], dest="es")
+    return jsonify({'county': county, 'jurisdiction': jurisdiction, 'precinct' : precinct, 'proposals': proposals}), 201
   except Exception as e:
     print(e)
-    return jsonify({"county": "county", "precinct" : "precinct", "jurisdiction": "jurisdiction"}), 201
-  # fetch info from DB -> 
-
-  print(zipcode)
-  return jsonify({"county": county, "precinct" : precinct, "jurisdiction": jurisdiction}), 201
+    return jsonify({"county": "county", "precinct" : "precinct", "jurisdiction": "jurisdiction"}), 500
 
 
 
