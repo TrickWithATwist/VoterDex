@@ -159,7 +159,9 @@ def get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_
         jurisdiction = driver.find_element(By.ID, 'lblJurisdName').text  # Extract Precinct Number
 
         return county, precinct, jurisdiction
-
+    except Exception as error:
+        print(error)
+        raise Exception()
     finally:
         driver.quit()
 
