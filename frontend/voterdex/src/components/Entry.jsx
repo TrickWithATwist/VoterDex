@@ -77,7 +77,7 @@ export default function Entry() {
         return (
             <div className="response-data">
                 <h2>Your Voter Information</h2>
-                {Object.entries(responseData.info).map(([key, value]) => (
+                {Object.entries(responseData['info']).map(([key, value]) => (
                     <p key={key}><strong>{key}:</strong> {value}</p>
                 ))}
             </div>
