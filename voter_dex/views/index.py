@@ -152,7 +152,7 @@ def get_precinct_and_county(first_name, last_name, birth_month, birth_year, zip_
     chrome_options = Options()
     # Remove headless mode for visible browser interactions
     chrome_options.add_argument("--headless")  
-    service = Service(ANDREW_DRIVER)
+    service = Service()
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     try:
@@ -196,7 +196,7 @@ def get_ballot(county, jurisdiction, precinct):
     # Configure Selenium WebDriver options
     chrome_options = Options()
     chrome_options.add_argument("--headless") 
-    service = Service(ANDREW_DRIVER)  # Update the path to your chromedriver
+    service = Service(CHROME_DRIVER)  # Update the path to your chromedriver
     driver = webdriver.Chrome(service=service, options=chrome_options)
 
     try:
