@@ -9,9 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import voter_dex
 import time
 
-# 129.0.6668.70
-
-CHROME_DRIVER = '/home/andrew/chromedriver-linux64/chromedriver'
+CHROME_DRIVER = 'scraping_scripts/chromedriver-mac-arm64/chromedriver'
 
 @voter_dex.app.route('/')
 def show_index():
@@ -36,10 +34,11 @@ def user_info():
   zipcode = data.get('zipcode')
 
   # fetch {county, jurisdiction, precinct}
-  county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zipcode)
-  
-  # 
-
+  try:
+    county, precinct, jurisdiction = get_precinct_and_county(first_name, last_name, birth_month, birth_year, zipcode)
+  except Exception as e:
+    print(e)
+    return jsonify({"county": "county", "precinct" : "precinct", "jurisdiction": "jurisdiction"}), 201
   # fetch info from DB -> 
 
   print(zipcode)
@@ -187,4 +186,4 @@ def get_ballot_types(county, jurisdiction, precinct: int):
         driver.quit()
 
 
-get_ballot_types("Ingham County", "City Of East Lansing", 3)
+# get_ballot_types("Ingham County", "City Of East Lansing", 3)
