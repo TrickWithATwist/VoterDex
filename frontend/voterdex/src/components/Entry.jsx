@@ -111,6 +111,7 @@ export default function Entry() {
                     <div className='entrymodal'>
                         {loading ? (
                             <div className="loading-container">
+                                <div className='logo'></div>
                                 <p>Loading...</p>
                                 <Progress value={progress} className="w-full" />
                             </div>
