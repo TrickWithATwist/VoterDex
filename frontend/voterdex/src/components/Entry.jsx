@@ -72,7 +72,7 @@ export default function Entry() {
     };
 
     const renderResponseData = () => {
-        if (!responseData || !responseData.info) return null;
+        if (!responseData || !responseData.info) return (<p>your mom</p>);
         
         return (
             <div className="response-data">
@@ -80,6 +80,18 @@ export default function Entry() {
                 {Object.entries(responseData['info']).map(([key, value]) => (
                     <p key={key}><strong>{key}:</strong> {value}</p>
                 ))}
+    
+                <h2>Proposals</h2>
+                {responseData.proposals && responseData.proposals.length > 0 ? (
+                    responseData.proposals.map((proposal, index) => (
+                        <div key={index}>
+                            <h3>{proposal.title}</h3>
+                            <p>{proposal.description}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No proposals available.</p>
+                )}
             </div>
         );
     };
