@@ -12,8 +12,7 @@ from googletrans import Translator
 import voter_dex
 import time
 
-CHROME_DRIVER = 'scraping_scripts/chromedriver-mac-arm64/chromedriver'
-ANDREW_DRIVER = '/home/andrew/chromedriver-linux64/chromedriver'
+CHROME_DRIVER = '/usr/bin/chromedriver'
 
 @voter_dex.app.route('/')
 def show_index():
