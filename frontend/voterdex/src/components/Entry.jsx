@@ -72,15 +72,11 @@ export default function Entry() {
     };
 
     const renderResponseData = () => {
-        if (!responseData) return null;
+        if (!responseData || !responseData.info) return null;
         
         return (
             <div className="response-data">
                 <h2>Your Voter Information</h2>
-                {Object.entries(responseData).map(([key, value]) => (
-                    <p key={key}><strong>{key}:</strong> {value}</p>
-                ))}
-                <h2>Proposals</h2>
                 {Object.entries(responseData.info).map(([key, value]) => (
                     <p key={key}><strong>{key}:</strong> {value}</p>
                 ))}
